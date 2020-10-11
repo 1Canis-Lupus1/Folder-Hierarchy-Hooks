@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState} from 'react';
 import './App.css';
 
 function App() {
+  const [color,setColor]=useState("white");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="box">
+        <input type='text' placeholder="Enter a Folder Name" />
+        <button>Add Folder</button>
+        <div className="display">
+          <ul>
+            <li className="root-folder" onClick={()=> setColor("white")}>Root Folder 1.0 <ul ><li className="sub-folder">Sub Folder 1.1</li></ul></li>
+            <li className="root-folder">Root Folder 2.0 <ul ><li  className="sub-folder">Sub Folder 2.1</li></ul></li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
