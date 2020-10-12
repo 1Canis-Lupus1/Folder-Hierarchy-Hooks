@@ -5,35 +5,38 @@ const FolderForm = () => {
   const { folders, addFolder } = useContext(FolderListContext)
   const [title, setTitle] = useState('');
 
+  //when Add Folder is clicked
   const handleSubmit = e => {
     e.preventDefault();
     addFolder(title);
-    // console.log(title);
+    // console.log("Title",title);
+    // console.log(folders)
     setTitle('');
+    // const folderIndex = e.target.getAttribute("folder-index");
+    // console.log("FolderIndex",folderIndex)
   }
 
   const handleChange = e => {
     setTitle(e.target.value)
   }
 
+  //For individual list click
   const handleClick = (e) => {
-    // console.log("Folder ID",e.target.getAttribute("folder-index"))
     const index = e.target.getAttribute("data-index");
     const folderIndex = e.target.getAttribute("folder-index");
+    console.log("Folder Index",folderIndex)
     // console.log(typeof(folders))
     let dummyFolders=[...folders]
     let parent=dummyFolders.forEach(item=>{
       //Checking the item which matches the selected list
       if (item.id === folderIndex) {
-        console.log("Matched");
-        console.log(item.title);
-        item.children.push("Sample")
+        console.log("Dummy:",dummyFolders)
+        console.log("Title id:",title); //this is not returning any value
+        item.children.push(title)//I Want to fetch the next title value here
         console.log("Dummy",item.children)
       }
 
     })
-
-    // console.log("Clicked Folder ID:",e.target);
   }
 
   return (
@@ -51,8 +54,6 @@ const FolderForm = () => {
         {folders.length ? (
           <ul className="list">
             {folders.map((folders, index) => {
-              // console.log("Folder ID:",folders.id)
-              // return <Folder folders={folders} key={index} />;
               return (
                 <div>
                   <li className="list-item" data-index={index} folder-index={folders.id} key={folders.id} onClick={handleClick}>
