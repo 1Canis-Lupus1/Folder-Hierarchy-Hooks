@@ -9,6 +9,7 @@ const FolderForm = () => {
     e.preventDefault();
     addFolder(title);
     setTitle('');
+
   }
 
   const handleChange = e => {

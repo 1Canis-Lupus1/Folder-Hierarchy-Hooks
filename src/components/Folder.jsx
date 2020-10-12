@@ -3,11 +3,16 @@ import { FolderListContext } from '../contexts/FolderListContext'
 
 const Folder = ({ folders }) => {
   const { addFolder } = useContext(FolderListContext)
-  // console.log("Title2:",addFolder)
+  // console.log("Folders",folders)
+  // console.log("Key",folders.id)
+  const handleClick=(e)=>{
+    console.log("Clicked",e.target.key);
+    // if(folders.id===)
+  }
+
   return (
-    <li className="list-item">
-      <span>{folders.title} </span>
-      {console.log(folders.id)}
+    <li className="list-item" key={folders.id} onClick={handleClick}>
+      {folders.title} 
     </li>
   )
 }
