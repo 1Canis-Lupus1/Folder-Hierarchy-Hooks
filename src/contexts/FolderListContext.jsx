@@ -14,7 +14,7 @@ const FolderListContextProvider = props => {
 
   // Add folder
   const addFolder = title => {
-    console.log("Title",title)
+    // console.log("Title",title)
     setFolders([...folders, { title, id:uuid(), children:[]}])
   }
 

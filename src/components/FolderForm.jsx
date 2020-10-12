@@ -2,18 +2,36 @@ import React, { useState, useContext } from 'react'
 import { FolderListContext } from '../contexts/FolderListContext'
 
 const FolderForm = () => {
-  const { addFolder } = useContext(FolderListContext)
+  const { folders,addFolder } = useContext(FolderListContext)
   const [title, setTitle] = useState('')
 
   const handleSubmit = e => {
     e.preventDefault();
     addFolder(title);
+    // console.log(title);
     setTitle('');
 
   }
 
   const handleChange = e => {
     setTitle(e.target.value)
+  }
+
+  const handleClick=(e)=>{
+    // console.log("Folder ID",e.target.getAttribute("folder-index"))
+    const index=e.target.getAttribute("data-index");
+    const folderIndex=e.target.getAttribute("folder-index");
+
+    if(folders[index].id === folderIndex){
+      console.log("Matched");
+      addFolder(title);
+      setTitle('');
+      // console.log("Children: ",folders[index].children)
+    }
+    console.log("Clicked Folder ID:",e.target);
+    console.log(title)
+
+    
   }
 
   return (
@@ -26,7 +44,26 @@ const FolderForm = () => {
         required
         className="task-input"
       />
-    <button type="submit" className="btn add-task-btn">Add Folder</button>
+      <button type="submit" className="btn add-task-btn">Add Folder</button>
+      <div>
+      {folders.length ? (
+        <ul className="list">
+          {folders.map((folders,index) => {
+            // console.log("Folder ID:",folders.id)
+            // return <Folder folders={folders} key={index} />;
+            return (
+              <div>
+                <li className="list-item" data-index={index} folder-index={folders.id} key={folders.id} onClick={handleClick}>
+                  {folders.title}
+                </li>
+              </div>
+            )
+          })}
+        </ul>
+      ) : (
+          <div className="no-tasks">Contains No Folder</div>
+        )}
+    </div>
     </form>
   )
 }
