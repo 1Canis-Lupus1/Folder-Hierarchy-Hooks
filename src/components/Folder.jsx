@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
 import { FolderListContext } from '../contexts/FolderListContext'
 
-const Folder = ({ folder }) => {
-  const { findItem } = useContext(FolderListContext)
+const Folder = ({ folders }) => {
+  const { addFolder } = useContext(FolderListContext)
+  // console.log("Title2:",addFolder)
   return (
     <li className="list-item">
-      <span>{folder.title} </span>
+      <span>{folders.title} </span>
+      {console.log(folders.id)}
     </li>
   )
 }
