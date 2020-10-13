@@ -1,9 +1,13 @@
 /* Add CSS now */
+.disp-box{
+    justify-content: center;
+}
+
 .input-field{
     border:5px solid blue;
     height:30px;
     width:320px;
-    padding: 40px 80px;
+    padding: 40px 90px;
     border:2px solid dotted;
     background-color: coral;
 }
@@ -21,8 +25,9 @@
 }
 
 .folder-list{
-    border:2px solid black;
+    border:10px solid black;
     width: 400px;
     padding:40px 40px;
     margin: 10px 30px;
+    background-color: gold;
 }

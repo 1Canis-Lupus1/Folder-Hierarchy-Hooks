@@ -25,7 +25,7 @@ const FolderForm = () => {
                     <div key={e.id} style={{ margin: "4px 30px" }}>
                         <div
                             onClick={() => folderSelect(e.id)}>
-                            &nbsp;{e.title}
+                            >>  <u>{e.title}</u>
                         </div>
                         <Fragment>{folderGenerator(e.children)}</Fragment>
                     </div>
@@ -36,7 +36,7 @@ const FolderForm = () => {
                         <div
                             name={e.id}
                             onClick={() => folderSelect(e.id)}>
-                            &nbsp;{e.title}
+                            >>  <u>{e.title}</u>
                         </div>
                     </div>
                 );
