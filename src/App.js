@@ -1,5 +1,5 @@
 import React from "react";
-// import './App.css'
+import './App.css'
 import FolderListContextProvider from "./contexts/FolderListContext";
 import FolderForm from "./components/FolderForm";
 

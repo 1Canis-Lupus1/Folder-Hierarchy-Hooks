@@ -53,6 +53,7 @@ const FolderForm = () => {
             <div className='input-field' style={{ margin:"20px 30px"}}>
                 <form onSubmit={handleSubmit}>
                     <input
+                        className="text-box"
                         type='text'
                         placeholder='Enter the Folder Name '
                         onChange={handleChange}

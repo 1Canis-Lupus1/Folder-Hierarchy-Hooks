@@ -79,11 +79,11 @@ const FolderListContextProvider = (props) => {
     }
   };
 
-  const folderSelect = (id) => {                    // Selected file
+  const folderSelect = (id) => {
     setSelectId(id);
   };
 
-  const folderUnselect = () => {                        // De-Selected File
+  const folderUnselect = () => {                        
     setSelectId(null);
   };
 

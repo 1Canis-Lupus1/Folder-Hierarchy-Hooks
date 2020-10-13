@@ -1,1 +1,28 @@
-//Add CSS now 
+/* Add CSS now */
+.input-field{
+    border:5px solid blue;
+    height:30px;
+    width:320px;
+    padding: 40px 80px;
+    border:2px solid dotted;
+    background-color: coral;
+}
+
+.text-box{
+    /* width: 200px; */
+    background-color: cornsilk;
+}
+
+.btn-add{
+    color: white;
+    background-color: green;
+    margin-left: 10px;
+    padding: 5px 5px;
+}
+
+.folder-list{
+    border:2px solid black;
+    width: 400px;
+    padding:40px 40px;
+    margin: 10px 30px;
+}
