@@ -1,33 +1,104 @@
-import React, { createContext, useState, useEffect } from 'react'
-import uuid from 'uuid'
+import React, { createContext, useState } from "react";
 
-export const FolderListContext = createContext()
+export const FileContext = createContext();
 
-const FolderListContextProvider = props => {
-  const initialState = JSON.parse(sessionStorage.getItem('folders')) || []
-  const [folders, setFolders] = useState(initialState)
+const FolderListContextProvider = (props) => {
+  const [selectId, setSelectId] = useState(null);
 
-  //Setting to Session Storage:
-  useEffect(() => {
-    sessionStorage.setItem('folders', JSON.stringify(folders))
-  }, [folders])
+  const [folders, setFolders] = useState([
+    {
+      title: "Root Folder 1",                              
+      id: 1,
+      children: [
+        {
+          title: "Sub Folder 1.1",
+          id: 11,
+          children: [
+            {
+              title: "Sub Child 1.1.1",
+              id: 111,
+              children: []
+            },
+          ],
+        },
+        {
+          title: "Sub Folder Child 1.1.2",
+          id: 112,
+          children: [],
+        },
+      ],
+    },
+    {
+      title: "Root Folder 2",
+      id: 2,
+      children: [
+        {
+          title: "Sub Folder 2.1",
+          id: 22,
+          children: [],
+        },
+      ],
+    },
+  ]);
 
-  // Add folder
-  const addFolder = title => {
-    // console.log("Title",title)
-    setFolders([...folders, { title, id:uuid(), children:[]}])
-  }
+
+  const randId = () => {                                   //generate random Id
+    return Math.floor(1000 + Math.random() * 9000);
+  };
+
+  const folderGenerator = (list, id, obj) => {             // File Render
+    const locateFile = list.find((e) => {
+      if (e.id === id) {
+        return e;
+      }
+      if (e.children.length > 0) {
+        folderGenerator(e.children, id, obj);
+      }
+
+      return undefined;
+    });
+
+    if (locateFile) {
+        locateFile.children.push(obj);
+
+      setFolders([...folders]);
+    }
+  };
+
+  //Adding a folder to the array
+  const addFolder = (title) => {                     
+    if (!selectId) {
+      folders.push({
+        title,
+        id: randId(),
+        children: [],
+      });
+      setFolders([...folders]);
+    } else {
+      folderGenerator(folders, selectId, { title, id: randId(), children: [] });
+    }
+  };
+
+  const folderSelect = (id) => {                    // Selected file
+    setSelectId(id);
+  };
+
+  const folderUnselect = () => {                        // De-Selected File
+    setSelectId(null);
+  };
 
   return (
-    <FolderListContext.Provider
+    <FileContext.Provider
       value={{
         folders,
-        addFolder
-      }}                
-    >
+        selectId,
+        addFolder,
+        folderSelect,
+        folderUnselect, 
+      }}>
       {props.children}
-    </FolderListContext.Provider>
-  )
-}
+    </FileContext.Provider>
+  );
+};
 
-export default FolderListContextProvider
+export default FolderListContextProvider;

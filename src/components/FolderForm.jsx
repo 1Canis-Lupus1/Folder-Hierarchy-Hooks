@@ -1,74 +1,73 @@
-import React, { useState, useContext } from 'react'
-import { FolderListContext } from '../contexts/FolderListContext'
+import React, { Fragment, useState, useContext } from "react";
+import { FileContext } from "../contexts/FolderListContext";
 
 const FolderForm = () => {
-  const { folders, addFolder } = useContext(FolderListContext)
-  const [title, setTitle] = useState('');
+    const { folders, addFolder, selectId, folderSelect, folderUnselect } = useContext(FileContext);
+    const [title, setTitle] = useState("");
 
-  //when Add Folder is clicked
-  const handleSubmit = e => {
-    e.preventDefault();
-    addFolder(title);
-    // console.log("Title",title);
-    // console.log(folders)
-    setTitle('');
-    // const folderIndex = e.target.getAttribute("folder-index");
-    // console.log("FolderIndex",folderIndex)
-  }
+   const handleChange = (e) => {
+        setTitle(e.target.value);
+    };
 
-  const handleChange = e => {
-    setTitle(e.target.value)
-  }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (title.length >= 1) {
+            addFolder(title);
+        }
+        setTitle("");
+    };
 
-  //For individual list click
-  const handleClick = (e) => {
-    const index = e.target.getAttribute("data-index");
-    const folderIndex = e.target.getAttribute("folder-index");
-    console.log("Folder Index",folderIndex)
-    // console.log(typeof(folders))
-    let dummyFolders=[...folders]
-    let parent=dummyFolders.forEach(item=>{
-      //Checking the item which matches the selected list
-      if (item.id === folderIndex) {
-        console.log("Dummy:",dummyFolders)
-        console.log("Title id:",title); //this is not returning any value
-        item.children.push(title)//I Want to fetch the next title value here
-        console.log("Dummy",item.children)
-      }
+    //Generating Child Nodes on Click event(**********Add Background color on click event*********)
+    const folderGenerator = (folder) => {
+        let folderHierarchy = folder.map((e) => {
+            if (e.children.length > 0) {
+                return (
+                    <div key={e.id} style={{ margin: "4px 30px" }}>
+                        <div
+                            onClick={() => folderSelect(e.id)}>
+                            &nbsp;{e.title}
+                        </div>
+                        <Fragment>{folderGenerator(e.children)}</Fragment>
+                    </div>
+                );
+            } else {
+                return (
+                    <div key={e.id} style={{ margin: "5px 20px" }}>
+                        <div
+                            name={e.id}
+                            onClick={() => folderSelect(e.id)}>
+                            &nbsp;{e.title}
+                        </div>
+                    </div>
+                );
+            }
+        });
+        return folderHierarchy;
+    };
 
-    })
-  }
+    return (
 
-  return (
-    <form onSubmit={handleSubmit} className="form">
-      <input
-        type="text"
-        placeholder="Add a Folder Name"
-        value={title}
-        onChange={handleChange}
-        required
-        className="task-input"
-      />
-      <button type="submit" className="btn add-task-btn">Add Folder</button>
-      <div>
-        {folders.length ? (
-          <ul className="list">
-            {folders.map((folders, index) => {
-              return (
-                <div>
-                  <li className="list-item" data-index={index} folder-index={folders.id} key={folders.id} onClick={handleClick}>
-                    {folders.title}
-                  </li>
-                </div>
-              )
-            })}
-          </ul>
-        ) : (
-            <div className="no-tasks">Contains No Folder</div>
-          )}
-      </div>
-    </form>
-  )
-}
+        //Input Field with Add button rendering default folder list
+        <React.Fragment>
 
-export default FolderForm
+            <div className='input-field' style={{ margin:"20px 30px"}}>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type='text'
+                        placeholder='Enter the Folder Name '
+                        onChange={handleChange}
+                        value={title}
+                    />
+                    <button className='btn-add' onClick={handleSubmit}>Add Folder
+                    </button>
+                </form>
+            </div>
+            <div className='folder-list'>
+                {folderGenerator(folders)}
+            </div>
+
+        </React.Fragment>
+    );
+};
+
+export default FolderForm;
