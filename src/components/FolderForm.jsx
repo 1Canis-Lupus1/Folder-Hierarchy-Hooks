@@ -55,7 +55,7 @@ const FolderForm = () => {
                     <input
                         className="text-box"
                         type='text'
-                        placeholder='Enter the Folder Name '
+                        placeholder=' Enter the Folder Name '
                         onChange={handleChange}
                         value={title}
                     />

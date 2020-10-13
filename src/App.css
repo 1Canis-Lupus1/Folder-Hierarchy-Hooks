@@ -15,6 +15,7 @@
 .text-box{
     /* width: 200px; */
     background-color: cornsilk;
+    border-radius: 10px;
 }
 
 .btn-add{
